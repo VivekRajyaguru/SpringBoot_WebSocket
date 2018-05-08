@@ -16,4 +16,11 @@ public class Controller {
 		return new UserResponse("Hi " + user.getName());
 	}
 	
+	@MessageMapping("/addUser")
+	@SendTo("/topic/showMessage")
+	public UserResponse addUser(User user) {
+		
+		return new UserResponse("New User " + user.getName() + " is Added");
+	}
+	
 }

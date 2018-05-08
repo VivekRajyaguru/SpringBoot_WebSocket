@@ -10,16 +10,18 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
+	// Creating EndPoints for WebSocket can add multiple end points also
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry stompEndPoint) {
-		stompEndPoint.addEndpoint("/websocket-example").withSockJS();
-		
+		stompEndPoint.addEndpoint("/websocket-example").withSockJS();		
 	}
 
+	
+	// Override Default Message Broker
 	@Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic");
-        registry.setApplicationDestinationPrefixes("/app");
+        registry.enableSimpleBroker("/topic");  // use to push the message
+        registry.setApplicationDestinationPrefixes("/app"); // prefix for Websocket
     }
 	
 	

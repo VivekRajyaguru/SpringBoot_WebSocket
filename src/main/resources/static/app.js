@@ -21,6 +21,9 @@ function connect() {
         stompClient.subscribe('/topic/user', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
+        stompClient.subscribe('/topic/showMessage', function(message) {
+        	showMessage(JSON.parse(message.body).content);
+        });
     });
 }
 
@@ -36,7 +39,15 @@ function sendName() {
     stompClient.send("/app/user", {}, JSON.stringify({'name': $("#name").val()}));
 }
 
+function addUser() {
+	stompClient.send("/app/addUser", {}, JSON.stringify({'name': $("#name1").val()}));
+}
+
 function showGreeting(message) {
+    $("#userinfo").append("<tr><td>" + message + "</td></tr>");
+}
+
+function showMessage(message) {
     $("#userinfo").append("<tr><td>" + message + "</td></tr>");
 }
 
@@ -47,4 +58,5 @@ $(function () {
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
+    $( "#addUser" ).click(function() { addUser(); });
 });
